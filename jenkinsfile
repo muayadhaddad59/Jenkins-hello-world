@@ -3,55 +3,35 @@ pipeline {
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
-        maven "M3910"
+        maven 'M3910'
     }
 
     stages {
-        
-        stage("Echo Version"){
-            steps{
+        stage('Echo Version') {
+            steps {
                 sh 'echo Print Maven Version'
-                sh "mvn -version"
+                sh 'mvn -version'
             }
         }
-        
-        stage("Build"){
-            steps{
+
+        stage('Build') {
+            steps {
                 //  git branch: 'main', url: 'https://github.com/muayadhaddad59/Jenkins-hello-world.git'
                 // /src/branch/main/src/main/java/com/kodekloud/hello_demo/HelloController.java
-                
-                // run maven package 
-                sh "mvn clean package -DskipTests=true"
+
+                // run maven package
+                sh 'mvn clean package -DskipTests=true'
             }
         }
-        
-        stage("Unit Test"){
+
+        stage('Unit Test') {
             steps {
-                sh "mvn test"
+                for (int i = 0; i < 60; i++) {
+                    echo "${i + 1}"
+                    sleep 1
+                }
+                sh 'mvn test'
             }
         }
-        
-        // stage('Build') {
-        //     steps {
-        //         // Get some code from a GitHub repository
-        //         git 'https://github.com/jglick/simple-maven-project-with-tests.git'
-
-        //         // Run Maven on a Unix agent.
-        //         sh "mvn -Dmaven.test.failure.ignore=true clean package"
-
-        //         // To run Maven on a Windows agent, use
-        //         // bat "mvn -Dmaven.test.failure.ignore=true clean package"
-        //     }
-
-        //     post {
-        //         // If Maven was able to run the tests, even if some of the test
-        //         // failed, record the test results and archive the jar file.
-        //         success {
-        //             junit '**/target/surefire-reports/TEST-*.xml'
-        //             archiveArtifacts 'target/*.jar'
-        //         }
-        //     }
-        // }
-   
     }
 }
