@@ -27,6 +27,6 @@ pipeline {
 
   }
   tools {
-    maven 'M3910'
+    maven 'M3911'
   }
 }
